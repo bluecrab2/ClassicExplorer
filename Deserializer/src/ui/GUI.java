@@ -453,7 +453,7 @@ public class GUI extends JFrame implements ActionListener {
 			Settings.write();
 		} else if(buttonSource == aboutMenuItem) {
 			JOptionPane.showMessageDialog(this, "ClassicExplorer was created by bluecrab2\n"
-					+ "Version: Alpha 1.0\n"
+					+ "Version: 1.0\n"
 					+ "Contact info:\n"
 					+ "Discord - bluecrab2#1996\n"
 					+ "Email - bluecrab2mc@gmail.com\n"
