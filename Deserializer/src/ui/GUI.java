@@ -67,6 +67,7 @@ public class GUI extends JFrame implements ActionListener {
 	private JCheckBoxMenuItem convertUnixItem;
 	private JCheckBoxMenuItem fullClassNamesItem;
 	private JCheckBoxMenuItem showSerialItem;
+	private JCheckBoxMenuItem skipBlocksItem;
 	private JMenuItem zoomOut;
 	private JMenuItem zoomIn;
 	private JMenu aboutMenu;
@@ -131,7 +132,6 @@ public class GUI extends JFrame implements ActionListener {
 			if(imageIO != null)
 				img = ImageIO.read(imageIO);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if(img != null) {
@@ -177,6 +177,11 @@ public class GUI extends JFrame implements ActionListener {
 		showSerialItem.setSelected(Settings.showSerialVersionUID);
 		showSerialItem.addActionListener(this);
 		settingsMenu.add(showSerialItem);
+		
+		skipBlocksItem = new JCheckBoxMenuItem("Skip Blocks");
+		skipBlocksItem.setSelected(Settings.skipBlocks);
+		skipBlocksItem.addActionListener(this);
+		settingsMenu.add(skipBlocksItem);
 		
 		zoomOut = new JMenuItem("- Zoom Out");
 		zoomOut.addActionListener(this);
@@ -406,7 +411,7 @@ public class GUI extends JFrame implements ActionListener {
 					if(e2.getMessage() != null) {
 						errorMessage = e2.getMessage();
 					}
-		            JOptionPane.showMessageDialog(this, "Invalid or corrupt file!\n" + errorMessage,
+		            JOptionPane.showMessageDialog(this, "Invalid file!\n" + errorMessage,
 		               "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -433,6 +438,8 @@ public class GUI extends JFrame implements ActionListener {
 			if(readClass != null)
 				displayReadClass();
 			Settings.write();
+		} else if(buttonSource == skipBlocksItem) {
+			Settings.write();
 		} else if(buttonSource == zoomOut) {
 			Font currentFont = tree.getFont();
 			Font decreaseFont = new Font(currentFont.getName(), currentFont.getStyle(), currentFont.getSize() - 5);
@@ -453,7 +460,7 @@ public class GUI extends JFrame implements ActionListener {
 			Settings.write();
 		} else if(buttonSource == aboutMenuItem) {
 			JOptionPane.showMessageDialog(this, "ClassicExplorer was created by bluecrab2\n"
-					+ "Version: 1.0\n"
+					+ "Version: 1.1\n"
 					+ "Contact info:\n"
 					+ "Discord - bluecrab2#1996\n"
 					+ "Email - bluecrab2mc@gmail.com\n"

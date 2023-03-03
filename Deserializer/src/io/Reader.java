@@ -20,6 +20,7 @@ import fields.FloatField;
 import fields.IntField;
 import fields.LongField;
 import fields.ShortField;
+import ui.Settings;
 
 /**
  * The main reader class for the Minecraft Classic file. It works to deserialize 
@@ -115,7 +116,7 @@ public class Reader {
 			Class readClass = readStream();
 			
 			//Ensure no more bytes remain
-			if(din.available() != 0) {
+			if(din.read() != -1) {
 				throw new IllegalArgumentException("Excess bytes inside file");
 			}
 			
@@ -142,26 +143,29 @@ public class Reader {
 		Class ret = new Class("Level");
 		ArrayField blocks = new ArrayField("blocks", "[B");
 		ret.addField(blocks);
-		int i = 0;//Current byte #
 		
-		//Convert the readInt back to bytes 
-		byte[] intBytes = ByteBuffer.allocate(4).putInt(readInt).array();
-		for(byte b : intBytes) {
-			ByteField bField = new ByteField("blocks[" + i + "]");
-			bField.setField(b);
-			blocks.addField(bField);
-			i++;
-		}
-		
-		for(; i < 256 * 256 * 64; i++) {
-			ByteField bField = new ByteField("blocks[" + i + "]");
-			bField.read();
-			blocks.addField(bField);
-		}
-		
-		//Ensure no more bytes remain
-		if(din.available() != 0) {
-			throw new IllegalArgumentException("Not a valid classic file.");
+		if(!Settings.skipBlocks) {
+			int i = 0;//Current byte #
+			
+			//Convert the readInt back to bytes 
+			byte[] intBytes = ByteBuffer.allocate(4).putInt(readInt).array();
+			for(byte b : intBytes) {
+				ByteField bField = new ByteField("blocks[" + i + "]");
+				bField.setField(b);
+				blocks.addField(bField);
+				i++;
+			}
+			
+			for(; i < 256 * 256 * 64; i++) {
+				ByteField bField = new ByteField("blocks[" + i + "]");
+				bField.read();
+				blocks.addField(bField);
+			}
+			
+			//Ensure no more bytes remain
+			if(din.read() != -1) {
+				throw new IllegalArgumentException("Not a valid classic file.");
+			}
 		}
 		
 		return ret;
@@ -210,16 +214,18 @@ public class Reader {
 		
 		ArrayField blocks = new ArrayField("blocks", "[B");
 		ret.addField(blocks);
-		int blockAmount = (Short) width.getField() * (Short) height.getField() * (Short) depth.getField();
-		for(int i = 0; i < blockAmount; i++) {
-			ByteField bField = new ByteField("blocks[" + i + "]");
-			bField.read();
-			blocks.addField(bField);
-		}
-		
-		//Ensure no more bytes remain
-		if(din.available() != 0) {
-			throw new IllegalArgumentException("Excess bytes inside file");
+		if(!Settings.skipBlocks) {
+			int blockAmount = (Short) width.getField() * (Short) height.getField() * (Short) depth.getField();
+			for(int i = 0; i < blockAmount; i++) {
+				ByteField bField = new ByteField("blocks[" + i + "]");
+				bField.read();
+				blocks.addField(bField);
+			}
+			
+			//Ensure no more bytes remain
+			if(din.read() != -1) {
+				throw new IllegalArgumentException("Excess bytes inside file");
+			}
 		}
 		
 		return ret;

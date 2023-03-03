@@ -6,12 +6,13 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Settings {
-	public static File currentFileDirectory;
-	public static boolean darkMode;
-	public static boolean convertUnixTimestampToDate;
-	public static boolean showFullClassNames;
-	public static boolean showSerialVersionUID;
-	public static int fontSize;
+	public static File currentFileDirectory = new File("%appdata%/.minecraft");
+	public static boolean darkMode = false;
+	public static boolean convertUnixTimestampToDate = false;
+	public static boolean showFullClassNames = false;
+	public static boolean showSerialVersionUID = false;
+	public static boolean skipBlocks = true;
+	public static int fontSize = 10;
 	
 	public static final File settingsFile = new File("settings.txt");
 	
@@ -20,6 +21,7 @@ public class Settings {
 	public static final String CONVERT_UNIX_TIME_PARAM = "convertUnixTimestampToDate";
 	public static final String SHOW_FULL_CLASS_PARAM = "showFullClassNames";
 	public static final String SHOW_SERIAL_PARAM = "showSerialVersionUID";
+	public static final String SKIP_BLOCKS_PARAM = "skipBlocks";
 	public static final String FONT_SIZE_PARAM = "fontSize";
 	
 	/**
@@ -56,6 +58,8 @@ public class Settings {
 			showFullClassNames = Boolean.parseBoolean(settingValue);
 		} else if(settingName.equals(SHOW_SERIAL_PARAM)) {
 			showSerialVersionUID = Boolean.parseBoolean(settingValue);
+		} else if(settingName.equals(SKIP_BLOCKS_PARAM)) { 
+			skipBlocks = Boolean.parseBoolean(settingValue);
 		} else if(settingName.equals(FONT_SIZE_PARAM)) {
 			fontSize = Integer.parseInt(settingValue);
 		} else {
@@ -72,6 +76,7 @@ public class Settings {
 		convertUnixTimestampToDate = false;
 		showFullClassNames = false;
 		showSerialVersionUID = false;
+		skipBlocks = true;
 		fontSize = 10;
 	}
 
@@ -86,6 +91,7 @@ public class Settings {
 			fw.write(CONVERT_UNIX_TIME_PARAM + "=" + convertUnixTimestampToDate + "\n");
 			fw.write(SHOW_FULL_CLASS_PARAM + "=" + showFullClassNames + "\n");
 			fw.write(SHOW_SERIAL_PARAM + "=" + showSerialVersionUID + "\n");
+			fw.write(SKIP_BLOCKS_PARAM + "=" + skipBlocks + "\n");
 			fw.write(FONT_SIZE_PARAM + "=" + fontSize + "\n");
 			fw.close();
 		} catch(IOException e) {

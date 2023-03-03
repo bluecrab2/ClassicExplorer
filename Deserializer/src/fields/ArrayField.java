@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import io.Reader;
+import ui.Settings;
 
 public class ArrayField extends Field {
 	String arrayDescriptor;
@@ -36,7 +37,7 @@ public class ArrayField extends Field {
 			for(int i = 0; i < 10; i++) {
 				System.out.println(Reader.din.readUnsignedByte() + ",");
 			}
-			throw new IllegalArgumentException("Invalid stater of array. Was: " + tcArray);
+			throw new IllegalArgumentException("Invalid starter of array. Was: " + tcArray);
 		}
 		
 		//Read classDesc
@@ -77,12 +78,18 @@ public class ArrayField extends Field {
 			//Not handling arrays of arrays (type = [) since they're not found in classic files
 			throw new IllegalArgumentException("Invalid array descriptor. Was: " + type);
 		}
-
-		for(int i = 0; i < count; i++) {
-			Field currentF = f.clone();
-			currentF.setFieldName(currentF.getFieldName() + "[" + i + "]");
-			currentF.read();
-			arrayContents.add(currentF);
+		
+		if(!(fieldName.equals("blocks") && Settings.skipBlocks)) {
+			for(int i = 0; i < count; i++) {
+				Field currentF = f.clone();
+				currentF.setFieldName(currentF.getFieldName() + "[" + i + "]");
+				currentF.read();
+				arrayContents.add(currentF);
+			}
+		} else {
+			for(int i = 0; i < count; i++) {
+				Reader.din.readByte();
+			}
 		}
 	}
 

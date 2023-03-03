@@ -86,7 +86,10 @@ public class ClassField extends Field {
 			}
 			
 			//Size of list
-			int size = Reader.din.readInt();
+			int size = (Integer) classField.getFields().get(0).getField();
+			
+			//Read in unneeded int in ArrayList
+			Reader.din.readInt();
 			
 			//Read each class
 			for(int i = 0; i < size; i++) {
