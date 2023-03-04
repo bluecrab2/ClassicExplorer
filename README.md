@@ -10,6 +10,7 @@ The settings tab has 5 options that are saved in the settings.txt file. These ar
 * Convert Unix Timestamp to Date - When enabled, this setting will convert the createTime field in the Level class from a Unix timestamp to a YYYY-MM-DD hh:mm:ss date in your time zone.
 * Show Full Class Name - Will display the entire package of each class instead of just the end class name.
 * Show SerialVersionUID - Will display the SerialVersionUID of classes next to them in parentheses. This number is not used in game at all, it is only used by the class when serializing into the file.
+* Skip Blocks - Will skip the "blocks" field in the Level class. Defaults to true to avoid lag associated with creating usually millions of nodes for each block.
 * Zoom - Increase or decrease the font. Can be done with the shortcuts CTRL + or CTRL - respectively.
 
 ## Level Save Format
@@ -19,7 +20,7 @@ All save files from Pre-Classic and Classic were compressed using the GZIP forma
 During these versions, there was no header or footer, it was just an array of blocks. 
 | Data | Length (Bytes) |	Description |
 | ---- | -------------- | ----------- |
-| Block Array |	4194304 (2^22) | An array of blocks in the world. Each byte represents a single block with its ID. |
+| Block Array |	4194304 (2^22) | An array of blocks in the world in the order x -> z -> y from 0 to the limit. Each byte represents a single block with its ID. |
 
 ### Classic 0.0.13a-dev to Classic 0.0.13a_03
 During these versions, there was only a header with a few pieces of information.
@@ -30,10 +31,10 @@ During these versions, there was only a header with a few pieces of information.
 | World Name | Variable |	First two bytes will be a short for the length of the string then that length bytes will be ASCII characters for the string. This string will always be either "A Nice World" or "--". |
 | Creator Player Name |	Variable |	First two bytes will be a short for the length of the string then that length bytes will be ASCII characters for the string. In Classic 0.0.13a-dev this will always be "noname" but Classic 0.0.13a_03 will be the actual user's name. |
 | Time Created | 8 |	A long value for the time the level was created as a Unix timestamp. |
-| Width |	2 |	The width of the world. |
-| Height |	2 |	The height of the world. |
-| Depth |	2 |	The depth of the world. |
-| Block Array |	4194304 (2^22) |	An array of blocks in the world. Each byte represents a single block with its ID. | 
+| Width |	2 |	The width of the world (x direction). |
+| Height |	2 |	The height of the world (z direction). |
+| Depth |	2 |	The depth of the world (y direction). |
+| Block Array |	4194304 (2^22) |	An array of blocks in the world in the order x -> z -> y from 0 to the limit. Each byte represents a single block with its ID. | 
 
 ### Classic 0.0.14a_08 and later
 During these versions, the file begins with these bytes: 
@@ -42,4 +43,4 @@ During these versions, the file begins with these bytes:
 | Magic Number |	4 |	A number used to identify the file. Always will be `27 1B B7 88`. |
 | Version |	1 |	A version identifier byte `02`. |
 
-After the header bytes, Minecraft uses [Java's Serializable interface](https://docs.oracle.com/javase/6/docs/platform/serialization/spec/protocol.html) to save the `Level` class. The Level class' fields throughout Classic versions many times.
+After the header bytes, Minecraft uses [Java's Serializable interface](https://docs.oracle.com/javase/6/docs/platform/serialization/spec/protocol.html) to save the `Level` class. The fields of the Level class changed throughout Classic versions many times.
