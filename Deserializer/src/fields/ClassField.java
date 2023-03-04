@@ -63,7 +63,11 @@ public class ClassField extends Field {
 		if(isString()) {
 			//Special case to read a string
 			Class readObject = Reader.readObject();
-			s = readObject.getName();
+			if(readObject != null) {
+				s = readObject.getName();
+			} else {
+				s = null;
+			}
 		} else if(isList()) {
 			//Special case to read a list
 			classField = Reader.readContent();

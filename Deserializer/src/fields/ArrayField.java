@@ -87,9 +87,7 @@ public class ArrayField extends Field {
 				arrayContents.add(currentF);
 			}
 		} else {
-			for(int i = 0; i < count; i++) {
-				Reader.din.readByte();
-			}
+			Reader.din.skip(count);
 		}
 	}
 

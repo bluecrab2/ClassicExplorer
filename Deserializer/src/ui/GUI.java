@@ -377,7 +377,12 @@ public class GUI extends JFrame implements ActionListener {
 					for(Class c : classes)
 						newNode.add(convertClassToNodeTree(c));
 				} else if(cf.isString()) {
-					newNode.add(new DefaultMutableTreeNode(cf.getString()));
+					String strNodeName = cf.getString();
+					if(strNodeName != null) {
+						newNode.add(new DefaultMutableTreeNode(strNodeName));
+					} else {
+						newNode.add(new DefaultMutableTreeNode("null"));
+					}
 				}
 			} else if(f instanceof ArrayField) {
 				ArrayField af = (ArrayField) f;
@@ -407,6 +412,8 @@ public class GUI extends JFrame implements ActionListener {
 					readFile(selectedFile);
 					displayReadClass();
 				} catch(Exception e2) {
+					e2.printStackTrace(); //TODO
+					
 					String errorMessage = "";
 					if(e2.getMessage() != null) {
 						errorMessage = e2.getMessage();
@@ -439,6 +446,9 @@ public class GUI extends JFrame implements ActionListener {
 				displayReadClass();
 			Settings.write();
 		} else if(buttonSource == skipBlocksItem) {
+			Settings.skipBlocks = skipBlocksItem.isSelected();
+			if(readClass != null)
+				displayReadClass();
 			Settings.write();
 		} else if(buttonSource == zoomOut) {
 			Font currentFont = tree.getFont();
