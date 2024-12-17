@@ -4,17 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.imageio.ImageIO;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -119,20 +116,6 @@ public class GUI extends JFrame implements ActionListener {
 		setUndecorated(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
-		
-		//Set icon
-		ClassLoader classLoader = (new Reader()).getClass().getClassLoader();
-		InputStream imageIO = classLoader.getResourceAsStream("images/ClassicExplorer Logo.png");
-		Image img = null;
-		try {
-			if(imageIO != null)
-				img = ImageIO.read(imageIO);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		if(img != null) {
-			setIconImage(img);
-		}
 		
 		//setIconImage(Toolkit.getDefaultToolkit().getImage("images/ClassicExplorer Logo.png"));
 		
