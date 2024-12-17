@@ -1,3 +1,4 @@
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 # ClassicExplorer
 This program reads all the information from Pre-Classic or Classic Minecraft files and displays them in a folder tree similar to [NBTExplorer](https://github.com/jaquadro/NBTExplorer/releases). The specific version range is rd-132211 (first version of Minecraft that has been released) to Classic 0.30 (last classic version). Indev and later versions use NBT format and so can be read with NBTExplorer.
 

@@ -35,10 +35,6 @@ import ui.Settings;
  * by the serializer. The grammar is documented at the following website:
  * https://docs.oracle.com/javase/6/docs/platform/serialization/spec/protocol.html
  * 
- * Copyright held by bluecrab2. Feel free to use to read your worlds but
- * if you wish to use code in another application, ask me for permission first.
- * I will most likely allow reuse but I hold the right to reject permission.
- * 
  * Contact info:
  * Discord - bluecrab2#1996
  * Email - bluecrab2mc@gmail.com

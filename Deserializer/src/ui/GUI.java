@@ -40,10 +40,6 @@ import io.Reader;
  * of the file after the reading. Calls the {@link #Reader} class' read
  * method to complete all the reading functionality.
  * 
- * Copyright held by bluecrab2. Feel free to use to read your worlds but
- * if you wish to use code in another application, ask me for permission first.
- * I will most likely allow reuse but I hold the right to reject permission.
- * 
  * Contact info:
  * Discord - bluecrab2#1996
  * Email - bluecrab2mc@gmail.com
